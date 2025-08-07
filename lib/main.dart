@@ -10,6 +10,7 @@ import 'screens/verification_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
+import 'screens/ngo_selection_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/home': (context) => const HomeScreen(),
         '/findOpportunities': (context) => const  FindOpportunitiesScreen(),
         '/volunteer': (context) => const VolunteerOpportunitiesPage(),
+        '/selection':(context) => const SelectionScreen(),
       },
     );
   }
