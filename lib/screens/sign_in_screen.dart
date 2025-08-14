@@ -90,7 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pushNamed(context, '/home'),
+                  onPressed: () => Navigator.pushNamed(context, '/aimatch'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1E3A8A),
                     shape: RoundedRectangleBorder(

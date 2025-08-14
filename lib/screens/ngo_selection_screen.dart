@@ -77,7 +77,7 @@ class SelectionScreen extends StatelessWidget {
                       buttonText: 'Select Volunteer',
                       image: 'lib/screens/assets/images/Group.png', // Replace with your image
                       onTap: () {
-                        Navigator.pushNamed(context, '/volunteer');
+                        Navigator.pushNamed(context, '/intro');
                       },
                     ),
                     const SizedBox(height: 20),

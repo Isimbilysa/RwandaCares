@@ -94,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 height: 48,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/verification');
+                    Navigator.pushNamed(context, '/signin');
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1E3A8A),

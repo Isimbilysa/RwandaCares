@@ -31,7 +31,7 @@ class OnboardingScreen extends StatelessWidget {
                 const SizedBox(height: 40),
                 ElevatedButton.icon(
                   onPressed: () {
-                    Navigator.pushNamed(context, '/intro');
+                    Navigator.pushNamed(context, '/selection');
                   },
                   icon: const Icon(Icons.arrow_forward),
                   label: const Text('Get started'),

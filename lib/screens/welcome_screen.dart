@@ -49,7 +49,7 @@ class WelcomeScreen extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton(
                 onPressed: () {
-                 Navigator.pushNamed(context, '/selection');
+                 Navigator.pushNamed(context, '/signup');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.white,
