@@ -88,7 +88,7 @@ class SelectionScreen extends StatelessWidget {
                       buttonText: 'Select NGO',
                       image: 'lib/screens/assets/images/group1.png', // Replace with your image
                       onTap: () {
-                        // TODO: Handle NGO selection
+                        Navigator.pushNamed(context, '/signup_organiza');
                       },
                     ),
                   ],

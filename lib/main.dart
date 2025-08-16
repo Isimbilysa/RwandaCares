@@ -12,6 +12,7 @@ import 'screens/profile_screen.dart';
 import 'screens/settings_screen.dart';
 import 'screens/ngo_selection_screen.dart';
 import 'screens/volunteersMatch.dart';
+import 'screens/sign_up_organiza.dart';
 
 void main() {
   runApp(const MyApp());
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         '/volunteer': (context) => const VolunteerOpportunitiesPage(),
         '/selection':(context) => const SelectionScreen(),
         '/aimatch': (context) => const VolunteersMatch(),
+        '/signup_organiza': (context) => const SignUpOrganizaScreen(),
       },
     );
   }
