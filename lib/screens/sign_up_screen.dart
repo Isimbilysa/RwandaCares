@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart' as http;
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -9,11 +11,70 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _phoneController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
-  final _confirmPasswordController = TextEditingController();
-  final bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
+
+  bool _obscurePassword = true;
+  bool _isLoading = false;
+
+  Future<void> _handleSignUp() async {
+    final firstName = _firstNameController.text.trim();
+    final lastName = _lastNameController.text.trim();
+    final phone = _phoneController.text.trim();
+    final email = _emailController.text.trim();
+    final password = _passwordController.text.trim();
+
+    if (firstName.isEmpty ||
+        lastName.isEmpty ||
+        phone.isEmpty ||
+        email.isEmpty ||
+        password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill in all fields")),
+      );
+      return;
+    }
+
+    setState(() => _isLoading = true);
+
+    try {
+      final response = await http.post(
+  Uri.parse("http://10.0.2.2:5000/api/auth/register"),
+  headers: {"Content-Type": "application/json"},
+  body: jsonEncode({
+    "firstname": firstName,  // lowercase
+    "lastname": lastName,    // lowercase
+    "email": email,
+    "password": password,
+    "role": "VOLUNTEER"
+  }),
+);
+
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 201 && data["success"] == true) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"] ?? "Sign up successful")),
+        );
+
+        Navigator.pushReplacementNamed(context, '/signin');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(data["message"] ?? "Sign up failed")),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    } finally {
+      setState(() => _isLoading = false);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,19 +108,47 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 32),
+
+              // First Name
               TextField(
-                controller: _emailController,
+                controller: _firstNameController,
                 decoration: const InputDecoration(
-                  labelText: 'Full Name',
+                  labelText: 'First Name',
                   border: OutlineInputBorder(),
                   filled: true,
                   fillColor: Color(0xFFF3F4F6),
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Last Name
               TextField(
-                controller: _passwordController,
-                obscureText: _obscurePassword,
+                controller: _lastNameController,
+                decoration: const InputDecoration(
+                  labelText: 'Last Name',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Color(0xFFF3F4F6),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Phone
+              TextField(
+                controller: _phoneController,
+                keyboardType: TextInputType.phone,
+                decoration: const InputDecoration(
+                  labelText: 'Phone Number',
+                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Color(0xFFF3F4F6),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              // Email
+              TextField(
+                controller: _emailController,
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   border: OutlineInputBorder(),
@@ -68,9 +157,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 20),
+
+              // Password
               TextField(
-                controller: _confirmPasswordController,
-                obscureText: _obscureConfirmPassword,
+                controller: _passwordController,
+                obscureText: _obscurePassword,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   border: const OutlineInputBorder(),
@@ -78,46 +169,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   fillColor: const Color(0xFFF3F4F6),
                   suffixIcon: IconButton(
                     icon: Icon(
-                      _obscureConfirmPassword ? Icons.visibility : Icons.visibility_off,
+                      _obscurePassword
+                          ? Icons.visibility
+                          : Icons.visibility_off,
                     ),
                     onPressed: () {
                       setState(() {
-                        _obscureConfirmPassword = !_obscureConfirmPassword;
+                        _obscurePassword = !_obscurePassword;
                       });
                     },
                   ),
                 ),
               ),
               const SizedBox(height: 32),
+
+              // Sign Up Button
               SizedBox(
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/signin');
-                  },
+                  onPressed: _isLoading ? null : _handleSignUp,
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF1E3A8A),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
-                  child: const Text(
-                    'Sign Up',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  child: _isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text(
+                          'Sign Up',
+                          style: TextStyle(color: Colors.white),
+                        ),
                 ),
               ),
               const SizedBox(height: 20),
+
               const Center(child: Text('or')),
               const SizedBox(height: 20),
+
               _socialButtonWithIcon(
                 'Sign up with Google',
-                const Icon(FontAwesomeIcons.google, color: Color.fromARGB(255, 102, 67, 231)),
+                const Icon(FontAwesomeIcons.google,
+                    color: Color.fromARGB(255, 102, 67, 231)),
                 () {
                   // Add Google sign-up logic
                 },
               ),
+
               const Spacer(),
               Center(
                 child: Row(
@@ -125,7 +224,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     const Text('Already have an account?'),
                     TextButton(
-                      onPressed: () => Navigator.pushNamed(context, '/signin'),
+                      onPressed: () =>
+                          Navigator.pushNamed(context, '/signin'),
                       child: const Text(
                         'Sign In',
                         style: TextStyle(color: Color(0xFF1E3A8A)),
