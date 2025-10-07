@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:rwanda_cares/screens/findOpportunities_screen.dart';
+import 'package:rwanda_cares/screens/home_screen.dart';
+import 'package:rwanda_cares/screens/my_events.dart';
+import 'package:rwanda_cares/screens/profile_screen.dart';
 
 void main() {
   runApp(const VolunteersMatch());
@@ -13,10 +17,10 @@ class VolunteersMatch extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/home',
       routes: {
-        '/home': (context) => const HomeContentPage(),
-        '/findOpportunities': (context) => const FindOpportunitiesPage(),
-        '/events': (context) => const EventsPage(),
-        '/profile': (context) => const ProfilePage(),
+        '/home': (context) => const HomeScreen(),
+        '/findOpportunities': (context) => const FindOpportunitiesScreen(),
+        '/events': (context) => const MyEventsPage(),
+        '/profile': (context) => const ProfileScreen(),
       },
     );
   }

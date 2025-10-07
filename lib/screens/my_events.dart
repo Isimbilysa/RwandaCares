@@ -26,11 +26,13 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.grey[50],
-
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Colors.white,
-        leading: BackButton(color: Colors.black),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
         title: const Text(
           'My Events',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
@@ -52,23 +54,33 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
         controller: _tabController,
         children: [
           _buildEventList(), // Upcoming
-          _buildEventList(), // Previous (you can use a different list here)
+          _buildEventList(), // Previous
         ],
       ),
 
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 2, // Events tab
+        currentIndex: 2, // Events tab active
         selectedItemColor: Colors.blue[900],
         unselectedItemColor: Colors.grey,
         onTap: (index) {
-          if (index == 0) Navigator.pushNamed(context, '/home');
-          if (index == 1) Navigator.pushNamed(context, '/rankings');
-          if (index == 2) Navigator.pushNamed(context, '/events');
-          if (index == 3) Navigator.pushNamed(context, '/profile');
+          switch (index) {
+            case 0:
+              Navigator.pushReplacementNamed(context, '/home');
+              break;
+            case 1:
+              Navigator.pushReplacementNamed(context, '/findOpportunities');
+              break;
+            case 2:
+              Navigator.pushReplacementNamed(context, '/events');
+              break;
+            case 3:
+              Navigator.pushReplacementNamed(context, '/profile');
+              break;
+          }
         },
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.star), label: 'Rankings'),
+          BottomNavigationBarItem(icon: Icon(Icons.work_outline), label: 'Opportunities'),
           BottomNavigationBarItem(icon: Icon(Icons.event), label: 'Events'),
           BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
         ],
@@ -77,7 +89,6 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
   }
 
   Widget _buildEventList() {
-    // You can replace this with real data
     return ListView.builder(
       padding: const EdgeInsets.all(16),
       itemCount: 5,
@@ -94,7 +105,7 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12),
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(color: Colors.black12, blurRadius: 4, offset: Offset(0, 2)),
         ],
       ),
@@ -112,7 +123,7 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
           ),
           const SizedBox(height: 8),
           const Text(
-            'Imagine you really want to help people in your community — maybe by joining a cleanup, helping at a school, or donating to a small charity. But you don’t know where to go or who needs help…',
+            'Join our community effort to make Kigali cleaner and greener. Meet amazing people and make an impact!',
             style: TextStyle(fontSize: 14, color: Colors.black87),
           ),
           const SizedBox(height: 12),
@@ -120,15 +131,15 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
             alignment: Alignment.centerRight,
             child: ElevatedButton(
               onPressed: () {
-                // Handle Register
+                // TODO: Add register logic or details page
               },
               style: ElevatedButton.styleFrom(
-                shape: StadiumBorder(),
-                backgroundColor: Colors.grey[200],
+                shape: const StadiumBorder(),
+                backgroundColor: Colors.blue[900],
               ),
-              child: const Text('Register', style: TextStyle(color: Colors.black)),
+              child: const Text('Register', style: TextStyle(color: Colors.white)),
             ),
-          )
+          ),
         ],
       ),
     );

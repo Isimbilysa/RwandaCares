@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'chat_box.dart';
 class FindOpportunitiesScreen extends StatefulWidget {
   const FindOpportunitiesScreen({super.key});
 
@@ -33,6 +33,19 @@ class FindOpportunitiesScreenState extends State<FindOpportunitiesScreen> {
       category: 'Education',
     ),
   ];
+void _showChatBox(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: Colors.white,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+    ),
+    builder: (context) {
+      return const ChatBox();
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -214,11 +227,21 @@ class FindOpportunitiesScreenState extends State<FindOpportunitiesScreen> {
       ),
       
       // Floating Action Button
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        backgroundColor: const Color(0xFF2E4B9B),
-        child: const Icon(Icons.add, color: Colors.white),
-      ),
+  floatingActionButton: FloatingActionButton(
+  backgroundColor: const Color(0xFF2E4B9B),
+  child: const Icon(Icons.chat, color: Colors.white),
+  onPressed: () {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => const ChatBox(),
+    );
+  },
+),
+
+
+
     );
   }
 

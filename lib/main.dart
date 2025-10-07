@@ -15,9 +15,10 @@ import 'screens/volunteersMatch.dart';
 import 'screens/sign_up_organiza.dart';
 import 'screens/notifications_page.dart';
 import 'screens/volunteerProfile.dart';
+import 'screens/my_events.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -26,7 +27,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'My App',
+      title: 'Rwanda Cares',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: const Color(0xFF1E3A8A),
         colorScheme: ColorScheme.fromSeed(seedColor: const Color(0xFF1E3A8A)),
@@ -35,21 +37,22 @@ class MyApp extends StatelessWidget {
       initialRoute: '/onboarding',
       routes: {
         '/onboarding': (context) => const OnboardingScreen(),
-        '/intro': (context) => const WelcomeScreen(), 
+        '/intro': (context) => const WelcomeScreen(),
         '/signin': (context) => const SignInScreen(),
         '/signup': (context) => const SignUpScreen(),
         '/verification': (context) => const VerificationScreen(),
-        '/dashboard': (context) => const DashboardScreen(),
-        '/profile': (context) => const ProfileScreen(),
-        '/settings': (context) => const SettingsScreen(),
-        '/home': (context) => const HomeScreen(),
-        '/findOpportunities': (context) => const  FindOpportunitiesScreen(),
-        '/volunteer': (context) => const VolunteerOpportunitiesPage(),
-        '/selection':(context) => const SelectionScreen(),
-        '/aimatch': (context) => const VolunteersMatch(),
-        '/signup_organiza': (context) => const SignUpOrganizaScreen(),
-        '/notifications': (context) => const NotificationsPage(),
-        '/volunteerProfile': (context) => const VolunteerProfilePage(),
+        '/dashboard': (context) => DashboardScreen(),
+        '/profile': (context) => ProfileScreen(),
+        '/settings': (context) => SettingsScreen(),
+        '/home': (context) => HomeScreen(),
+        '/findOpportunities': (context) => FindOpportunitiesScreen(),
+        '/volunteer': (context) => VolunteerOpportunitiesPage(),
+        '/selection': (context) => SelectionScreen(),
+        '/aimatch': (context) => VolunteersMatch(), 
+        '/signup_organiza': (context) => SignUpOrganizaScreen(),
+        '/notifications': (context) => NotificationsPage(),
+        '/volunteerProfile': (context) => VolunteerProfilePage(),
+        '/events': (context) => const MyEventsPage(),
       },
     );
   }
