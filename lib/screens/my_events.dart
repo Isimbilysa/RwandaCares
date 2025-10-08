@@ -7,7 +7,8 @@ class MyEventsPage extends StatefulWidget {
   State<MyEventsPage> createState() => _MyEventsPageState();
 }
 
-class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderStateMixin {
+class _MyEventsPageState extends State<MyEventsPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
   @override
@@ -49,7 +50,6 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
           ],
         ),
       ),
-
       body: TabBarView(
         controller: _tabController,
         children: [
@@ -57,7 +57,6 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
           _buildEventList(), // Previous
         ],
       ),
-
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 2, // Events tab active
         selectedItemColor: Colors.blue[900],
@@ -91,7 +90,7 @@ class _MyEventsPageState extends State<MyEventsPage> with SingleTickerProviderSt
   Widget _buildEventList() {
     return ListView.builder(
       padding: const EdgeInsets.all(16),
-      itemCount: 5,
+      itemCount: 5, // Replace with dynamic length later
       itemBuilder: (context, index) {
         return _buildEventCard();
       },
